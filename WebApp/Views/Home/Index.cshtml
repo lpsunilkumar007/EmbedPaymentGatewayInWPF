@@ -1,66 +1,92 @@
-﻿
-<script type="text/javascript"
-        src="https://jstest.authorize.net/v1/Accept.js"
-        charset="utf-8">
-</script>
-
-<form id="paymentForm">
-    <input type="text" name="cardNumber" id="cardNumber" placeholder="cardNumber" /> <br><br>
-    <input type="text" name="expMonth" id="expMonth" placeholder="expMonth" /> <br><br>
-    <input type="text" name="expYear" id="expYear" placeholder="expYear" /> <br><br>
-    <input type="text" name="cardCode" id="cardCode" placeholder="cardCode" /> <br><br>
-    <input type="text" name="accountNumber" id="accountNumber" placeholder="accountNumber" /> <br><br>
-    <input type="text" name="routingNumber" id="routingNumber" placeholder="routingNumber" /> <br><br>
-    <input type="text" name="nameOnAccount" id="nameOnAccount" placeholder="nameOnAccount" /> <br><br>
-    <input type="text" name="accountType" id="accountType" placeholder="accountType" /> <br><br>
-    <input type="hidden" name="dataValue" id="dataValue" />
-    <input type="hidden" name="dataDescriptor" id="dataDescriptor" />
-    <button type="button" onclick="sendPaymentDataToAnet()">Pay</button>
-</form>
-
-<script>
-
-    function sendPaymentDataToAnet() {
-        var authData = {};
-        authData.clientKey = "2S2Q9n2dbaEaqVjFPAx5T8zk63fYCwX52M8wxVRmZLmVp8h562nchwCZZG223HF2";
-        authData.apiLoginID = "3q7Gw6EzU7Z";
-
-        var cardData = {};
-        cardData.cardNumber = document.getElementById("cardNumber").value;
-        cardData.month = document.getElementById("expMonth").value;
-        cardData.year = document.getElementById("expYear").value;
-        cardData.cardCode = document.getElementById("cardCode").value;
-
-        var secureData = {};
-        secureData.authData = authData;
-        secureData.cardData = cardData;
-
-        Accept.dispatchData(secureData, responseHandler);
-
-        function responseHandler(response) {
-
-            if (response.messages.resultCode === "Error") {
-                var i = 0;
-                while (i < response.messages.message.length) {
-                    console.log(
-                        response.messages.message[i].code + ": " +
-                        response.messages.message[i].text
+﻿@{
+    Layout = null;
+}
+<html>
+<head>
+    <script type="text/javascript"
+            src="https://jstest.authorize.net/v1/Accept.js"
+            charset="utf-8">
+    </script>
+    <script>
+        if (
+            window.chrome &&
+            window.chrome.webview &&
+            window.chrome.webview.postMessage
+        ) {
+            window.clientAdapator = {
+                processUICommand: (c, d) => {
+                    window.chrome.webview.postMessage(
+                        JSON.stringify({ command: c, meta: d })
                     );
-                    i = i + 1;
-                }
-            } else {
+                },
+            };
+        }
 
-                paymentFormUpdate(response.opaqueData);
+    </script>
+</head>
+<body>
+    <form id="paymentForm">
+        <input type="text" name="cardNumber" id="cardNumber" placeholder="cardNumber" value="4111111111111111" /> <br><br>
+        <input type="text" name="expMonth" id="expMonth" placeholder="expMonth" value="12" /> <br><br>
+        <input type="text" name="expYear" id="expYear" placeholder="expYear" value="2025" /> <br><br>
+        <input type="text" name="cardCode" id="cardCode" placeholder="cardCode" value="122" /> <br><br>
+        <input type="text" name="accountNumber" id="accountNumber" placeholder="accountNumber" value="XXXX0024" /> <br><br>
+        <input type="text" name="routingNumber" id="routingNumber" placeholder="routingNumber" value="XXXX7890" /> <br><br>
+        <input type="text" name="nameOnAccount" id="nameOnAccount" placeholder="nameOnAccount" value="Test Merchant" /> <br><br>
+        <input type="text" name="accountType" id="accountType" placeholder="accountType" value="Checking" /> <br><br>
+        <input type="hidden" name="dataValue" id="dataValue" value="" />
+        <input type="hidden" name="dataDescriptor" id="dataDescriptor" />
+        <button type="button" onclick="sendPaymentDataToAnet()">Pay</button>
+    </form>
+
+    <script>
+
+        function sendPaymentDataToAnet() {           
+            var authData = {};
+            authData.clientKey = "2S2Q9n2dbaEaqVjFPAx5T8zk63fYCwX52M8wxVRmZLmVp8h562nchwCZZG223HF2";
+            authData.apiLoginID = "3q7Gw6EzU7Z";
+
+            var cardData = {};
+            cardData.cardNumber = document.getElementById("cardNumber").value;
+            cardData.month = document.getElementById("expMonth").value;
+            cardData.year = document.getElementById("expYear").value;
+            cardData.cardCode = document.getElementById("cardCode").value;
+
+            var secureData = {};
+            secureData.authData = authData;
+            secureData.cardData = cardData;
+
+            Accept.dispatchData(secureData, responseHandler);
+
+            function responseHandler(response) {               
+                if (response.messages.resultCode === "Error") {
+                    var i = 0;
+                    while (i < response.messages.message.length) {
+                         
+                        console.log(
+                            response.messages.message[i].code + ": " +
+                            response.messages.message[i].text
+                        );
+                        i = i + 1;
+                    }
+                } else {
+
+                    paymentFormUpdate(response.opaqueData);
+                }
             }
         }
-    }
 
-    function paymentFormUpdate(opaqueData) {
-        window.clientAdapator.processUICommand("token", opaqueData.dataValue)
-        document.getElementById("dataDescriptor").value = opaqueData.dataDescriptor;
-        document.getElementById("dataValue").value = opaqueData.dataValue;
+        function paymentFormUpdate(opaqueData) {
+            window.clientAdapator.processUICommand("Token", opaqueData.dataValue);
+            document.getElementById("dataDescriptor").value = opaqueData.dataDescriptor;
+            document.getElementById("dataValue").value = opaqueData.dataValue;
 
-    }
-</script>
+        }
+    </script>
+</body>
+</html>
+
+
+
 
 

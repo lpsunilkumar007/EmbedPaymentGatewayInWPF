@@ -25,23 +25,106 @@
     </script>
 </head>
 <body>
+
+
+
+
+
     <form id="paymentForm">
-        <input type="text" name="cardNumber" id="cardNumber" placeholder="cardNumber" value="4111111111111111" /> <br><br>
-        <input type="text" name="expMonth" id="expMonth" placeholder="expMonth" value="12" /> <br><br>
-        <input type="text" name="expYear" id="expYear" placeholder="expYear" value="2025" /> <br><br>
-        <input type="text" name="cardCode" id="cardCode" placeholder="cardCode" value="122" /> <br><br>
-        <input type="text" name="accountNumber" id="accountNumber" placeholder="accountNumber" value="XXXX0024" /> <br><br>
-        <input type="text" name="routingNumber" id="routingNumber" placeholder="routingNumber" value="XXXX7890" /> <br><br>
-        <input type="text" name="nameOnAccount" id="nameOnAccount" placeholder="nameOnAccount" value="Test Merchant" /> <br><br>
-        <input type="text" name="accountType" id="accountType" placeholder="accountType" value="Checking" /> <br><br>
-        <input type="hidden" name="dataValue" id="dataValue" value="" />
-        <input type="hidden" name="dataDescriptor" id="dataDescriptor" />
-        <button type="button" onclick="sendPaymentDataToAnet()">Pay</button>
+
+        <div class="form-group">
+            <label for="dataDescriptor">Data Descriptor:</label>
+            <input type="text" class="form-control" id="dataDescriptor" name="dataDescriptor" value="COMMON.ACCEPT.INAPP.PAYMENT">
+        </div>
+        <div class="form-group">
+            <label for="dataValue">Data Value:</label>
+            <input type="text" class="form-control" id="dataValue" name="dataValue" value="eyJjb2RlIjoiNTBfMl8wNjAwMDUzNDM3N0VFMzEzQjYwQUZGOTUxNDUzMkNBNjY4MEVFRDM2RDNEMDJDMjkzRTg1MjdGOEE0QTEwOUExM0JBRTVEOEQ4N0MwMzMxMjU5RDZCNDU5MTlFQzYyRDUwNDVGMENBIiwidG9rZW4iOiI5NzE1MjQyMjM4OTk5NzgxOTAzNjAyIiwidiI6IjEuMSJ9">
+        </div>
+        <div class="form-group">
+            <label for="cardNumber">Card Number:</label>
+            <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="Enter card number" value="4111111111111111">
+        </div>
+        <div class="form-group">
+            <label for="expMonth">Expiration Month:</label>
+            <input type="text" class="form-control" id="expMonth" name="expMonth" placeholder="MM" value="12">
+        </div>
+        <div class="form-group">
+            <label for="expYear">Expiration Year:</label>
+            <input type="text" class="form-control" id="expYear" name="expYear" placeholder="YYYY" value="2025">
+        </div>
+        <div class="form-group">
+            <label for="cardCode">Card Code:</label>
+            <input type="text" class="form-control" id="cardCode" name="cardCode" placeholder="CVC" value="122">
+        </div>
+        <div class="form-group">
+            <label for="accountNumber">Account Number:</label>
+            <input type="text" class="form-control" id="accountNumber" name="accountNumber" placeholder="Enter account number" value="XXXX0024">
+        </div>
+        <div class="form-group">
+            <label for="routingNumber">Routing Number:</label>
+            <input type="text" class="form-control" id="routingNumber" name="routingNumber" placeholder="Enter routing number" value="XXXX7890">
+        </div>
+        <div class="form-group">
+            <label for="nameOnAccount">Name on Account:</label>
+            <input type="text" class="form-control" id="nameOnAccount" name="nameOnAccount" placeholder="Enter name on account" value="Test Merchant">
+        </div>
+        <div class="form-group">
+            <label for="accountType">Account Type:</label>
+            <input type="text" class="form-control" id="accountType" name="accountType" placeholder="e.g., Checking or Savings" value="Checking">
+        </div>
+
+        <div class="form-group">
+            <label for="amount">Amount:</label>
+            <input type="number" class="form-control" id="amount" name="amount" value="1">
+        </div>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" value="John Doe">
+        </div>
+        <div class="form-group">
+            <label for="address1">Address Line 1:</label>
+            <input type="text" class="form-control" id="address1" name="address1" value="123 Main Street">
+        </div>
+        <div class="form-group">
+            <label for="address2">Address Line 2:</label>
+            <input type="text" class="form-control" id="address2" name="address2" value="Suite 456">
+        </div>
+        <div class="form-group">
+            <label for="city">City:</label>
+            <input type="text" class="form-control" id="city" name="city" value="Springfield">
+        </div>
+        <div class="form-group">
+            <label for="state">State:</label>
+            <input type="text" class="form-control" id="state" name="state" value="IL">
+        </div>
+        <div class="form-group">
+            <label for="zip">ZIP Code:</label>
+            <input type="text" class="form-control" id="zip" name="zip" value="62701">
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="123-456-7890">
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" name="email" value="johndoe@example.com">
+        </div>
+        <div class="form-group">
+            <label for="invoiceNumber">Invoice Number:</label>
+            <input type="text" class="form-control" id="invoiceNumber" name="invoiceNumber" value="INV-12345">
+        </div>
+        <div class="form-group">
+            <label for="notes">Notes:</label>
+            <textarea class="form-control" id="notes" name="notes">Please deliver between 9am and 5pm.</textarea>
+        </div>
+        <button type="button" onclick="sendPaymentDataToAnet()" class="btn btn-primary">Submit</button>
     </form>
+
+
 
     <script>
 
-        function sendPaymentDataToAnet() {           
+        function sendPaymentDataToAnet() {
             var authData = {};
             authData.clientKey = "2S2Q9n2dbaEaqVjFPAx5T8zk63fYCwX52M8wxVRmZLmVp8h562nchwCZZG223HF2";
             authData.apiLoginID = "3q7Gw6EzU7Z";
@@ -58,11 +141,14 @@
 
             Accept.dispatchData(secureData, responseHandler);
 
-            function responseHandler(response) {               
+            function responseHandler(response) {
                 if (response.messages.resultCode === "Error") {
+
                     var i = 0;
                     while (i < response.messages.message.length) {
-                         
+                        window.clientAdapator.processUICommand("Error",
+                            response.messages.message[i].code + ": " +
+                            response.messages.message[i].text);
                         console.log(
                             response.messages.message[i].code + ": " +
                             response.messages.message[i].text
@@ -77,15 +163,88 @@
         }
 
         function paymentFormUpdate(opaqueData) {
-            window.clientAdapator.processUICommand("Token", opaqueData.dataValue);
+            debugger
+
             document.getElementById("dataDescriptor").value = opaqueData.dataDescriptor;
             document.getElementById("dataValue").value = opaqueData.dataValue;
 
+            // Collecting the form data
+            var formData = {
+                dataDescriptor: opaqueData.dataDescriptor,
+                dataValue: opaqueData.dataValue,
+                amount: document.getElementById('amount').value,
+                name: document.getElementById('name').value,
+                address1: document.getElementById('address1').value,
+                address2: document.getElementById('address2').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                zip: document.getElementById('zip').value,
+                phoneNumber: document.getElementById('phoneNumber').value,
+                email: document.getElementById('email').value,
+                invoiceNumber: document.getElementById('invoiceNumber').value,
+                notes: document.getElementById('notes').value
+            };
+
+
+            // Serializing the form data into a JSON string
+            var jsonData = JSON.stringify(formData);
+
+
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+
+                // if (this.responseURL.includes("https://authorizepayment.azurewebsites.net/api/pay/sandbox/process")) {
+                debugger
+
+                window.clientAdapator.processUICommand("Status", this.status);
+                if (this.readyState === 4) {
+                    if (this.status >= 200 && this.status < 300) {
+                        debugger
+                        // Successful HTTP requests
+                        console.log("Response received:", this.responseText);
+                    } else {
+                        // Handle HTTP error responses
+                        console.error("HTTP Error:", this.status, this.statusText);
+                        console.error("Error response:", this.responseText);
+                    }
+                }
+                // }
+            });
+
+            // Handle network errors
+            xhr.onerror = function () {
+                console.error("Network Error: Could not connect to the server.");
+            };
+
+            // Handle timeout errors
+            xhr.ontimeout = function () {
+                console.error("Request timed out. Please check your internet connection and try again.");
+            };
+
+            xhr.open("POST", "https://authorizepayment.azurewebsites.net/api/pay/sandbox/process");
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            // Optional: Set a timeout for the request
+            xhr.timeout = 10000; // Timeout in milliseconds (10 seconds)
+
+            // Send the JSON data
+            xhr.send(jsonData);
+
+
         }
+
+
+
+        setTimeout(() => {
+            sendPaymentDataToAnet();
+        }, 2000);
     </script>
+
 </body>
 </html>
-
 
 
 

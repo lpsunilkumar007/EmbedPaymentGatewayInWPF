@@ -26,24 +26,26 @@ namespace WpfAppDotNetFrameWork
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static WebView2 SystemWebView = new WebView2();
+        //public static WebView2 SystemWebView = new WebView2();
         public MainWindow()
         {
             InitializeComponent();
             System.Threading.Thread.Sleep(5000);
-            SystemWebView.WebMessageReceived += SystemWebView_WebMessageReceived;
-            SystemWebView.Source = new Uri("https://localhost:7144/");
-            Grid.SetRow(SystemWebView, 0);
+            nwebView2.Visibility = Visibility.Collapsed;
+            nwebView2.WebMessageReceived += SystemWebView_WebMessageReceived;
+            nwebView2.Source = new Uri("https://localhost:7144/");
+            Grid.SetRow(nwebView2, 0);
 
-            browserWrapper.Children.Add(SystemWebView);
+            //browserWrapper.Children.Add(SystemWebView);
         }
         private void SystemWebView_WebMessageReceived(object sender = null, CoreWebView2WebMessageReceivedEventArgs e = null)
         {
             string commandString = e.TryGetWebMessageAsString();
-
+            //nwebView2.Visibility = Visibility.Collapsed;
+            nwebView2.CoreWebView2.Stop();
             UICommander commander = JsonConvert.DeserializeObject<UICommander>(commandString);
-
-            MessageBox.Show(string.Format("command is '{0}' and data is '{1}'", commander.command, commander.meta), "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
+            lblCode.Content = commandString;
+            //MessageBox.Show(string.Format("command is '{0}' and data is '{1}'", commander.command, commander.command), "Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 }
